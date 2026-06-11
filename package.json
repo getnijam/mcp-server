@@ -1,0 +1,45 @@
+{
+  "name": "@nijam/mcp-server",
+  "version": "0.1.0-alpha.0",
+  "description": "MCP server for Nijam — query your Playwright runs, failures, and flakiness from any MCP client.",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "playwright",
+    "testing",
+    "flaky-tests",
+    "nijam"
+  ],
+  "homepage": "https://nijam.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/getnijam/mcp-server.git"
+  },
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "nijam-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "release": "npm run build && npm publish --access public"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2"
+  }
+}
