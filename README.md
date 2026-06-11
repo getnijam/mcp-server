@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./logo.png" alt="Nijam" width="84" height="84" />
+</p>
+
 # @nijam/mcp-server
 
 MCP server for [Nijam](https://nijam.dev) — lets any MCP-capable agent (Claude Code, Claude Desktop, Cursor, …) query your Playwright test runs: what failed, why, since when, and what's flaky.
