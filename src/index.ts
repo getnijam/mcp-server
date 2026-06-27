@@ -18,7 +18,7 @@ const apiKey = process.env.NIJAM_API_KEY;
 const apiUrl = process.env.NIJAM_API_URL ?? DEFAULT_API_URL;
 
 if (!apiKey) {
-  // stderr only — stdout belongs to the MCP protocol.
+  // stderr only, stdout belongs to the MCP protocol.
   console.error(
     '[nijam-mcp] NIJAM_API_KEY is not set. Create a read key (nij_rk_…) in your Nijam ' +
       'dashboard (Organization settings → Secret keys → Read type) and pass it via the MCP server env.',

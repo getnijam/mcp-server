@@ -24,7 +24,7 @@ const MAX_FILE_FETCHES = 15;
 const PROJECT_PARAM = z
   .string()
   .min(1)
-  .describe('Project id (UUID), slug (e.g. "web-checkout"), or name — call get_projects to list them');
+  .describe('Project id (UUID), slug (e.g. "web-checkout"), or name, call get_projects to list them');
 
 function ok(data: unknown): CallToolResult {
   return { content: [{ type: 'text', text: JSON.stringify(data, null, 2) }] };
@@ -109,7 +109,7 @@ async function withTraceUrls(client: NijamClient, artifacts: ApiArtifact[]): Pro
         const { url } = await client.get<{ url: string }>(`/v1/attachments/${a.id}/url`);
         return { ...a, url };
       } catch {
-        return a; // artifact storage unavailable — keep metadata, url stays null
+        return a; // artifact storage unavailable, keep metadata, url stays null
       }
     }),
   );
@@ -120,7 +120,7 @@ export function registerTools(server: McpServer, client: NijamClient): void {
     'get_projects',
     {
       description:
-        'List the Nijam projects this API key can access (id, slug, name). Call this first to resolve a project reference — every other tool takes the id or slug it returns.',
+        'List the Nijam projects this API key can access (id, slug, name). Call this first to resolve a project reference, every other tool takes the id or slug it returns.',
       inputSchema: {},
     },
     guarded(async () => {
@@ -164,7 +164,7 @@ export function registerTools(server: McpServer, client: NijamClient): void {
     'list_runs',
     {
       description:
-        'List test runs of a project, newest first — filterable by status (passed/failed/flaky), branch; paginated.',
+        'List test runs of a project, newest first, filterable by status (passed/failed/flaky), branch; paginated.',
       inputSchema: {
         project: PROJECT_PARAM,
         status: z.enum(['all', 'passed', 'failed', 'flaky']).optional(),
@@ -229,7 +229,7 @@ export function registerTools(server: McpServer, client: NijamClient): void {
         return ok({
           run: trimRun(detail.run),
           failingTests: [],
-          note: `No failing tests — run is "${detail.run.status}" (${detail.summary.flaky} flaky).`,
+          note: `No failing tests, run is "${detail.run.status}" (${detail.summary.flaky} flaky).`,
         });
       }
 
@@ -253,7 +253,7 @@ export function registerTools(server: McpServer, client: NijamClient): void {
         failingTestCount: failing.length,
         failingTests: failing,
         ...(truncated && {
-          note: `Only the first ${MAX_FILE_FETCHES} failing spec files were scanned (${failingFiles.length} total) — use get_run for the full file list.`,
+          note: `Only the first ${MAX_FILE_FETCHES} failing spec files were scanned (${failingFiles.length} total), use get_run for the full file list.`,
         }),
       });
     }),
@@ -274,7 +274,7 @@ export function registerTools(server: McpServer, client: NijamClient): void {
       if (!test_id && !title) return fail('Pass test_id or title.');
 
       const detail = await client.get<RunDetailResponse>(`/v1/runs/${run_id}`);
-      // Failing files first — that's where the sought test almost always lives.
+      // Failing files first, that's where the sought test almost always lives.
       const ordered = [...detail.files].sort((a, b) => b.failed - a.failed).map((f) => f.file);
       const { tests, truncated } = await fetchRunTests(client, run_id, ordered);
 
@@ -321,7 +321,7 @@ export function registerTools(server: McpServer, client: NijamClient): void {
     'get_test_history',
     {
       description:
-        "One test's result across the last 30 finalized runs of a project — status, duration, commit and branch per run. Good for spotting when it started failing.",
+        "One test's result across the last 30 finalized runs of a project, status, duration, commit and branch per run. Good for spotting when it started failing.",
       inputSchema: {
         project: PROJECT_PARAM,
         test_id: z.string().min(1).describe('Stable test id (from list_failing_tests / list_flaky_tests)'),
@@ -360,7 +360,7 @@ export function registerTools(server: McpServer, client: NijamClient): void {
       } else if (detail.test.status === 'flaky') {
         explanation = 'Marked flaky in its most recent run.';
       } else {
-        explanation = `No flakes in the last ${detail.history.length} runs — current status is "${detail.test.status}".`;
+        explanation = `No flakes in the last ${detail.history.length} runs, current status is "${detail.test.status}".`;
       }
 
       return ok({
@@ -380,7 +380,7 @@ export function registerTools(server: McpServer, client: NijamClient): void {
     'list_flaky_tests',
     {
       description:
-        'List the tests that were flaky in the last 10 finalized runs of a project, with how often each flaked — the "what should we fix first" view.',
+        'List the tests that were flaky in the last 10 finalized runs of a project, with how often each flaked, the "what should we fix first" view.',
       inputSchema: { project: PROJECT_PARAM },
     },
     guarded(async ({ project }) => {

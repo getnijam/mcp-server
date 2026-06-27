@@ -39,7 +39,7 @@ export class NijamClient {
         message = body.error?.message ?? fallback;
         code = body.error?.code ?? code;
       } catch {
-        // non-JSON error body — keep the fallback
+        // non-JSON error body, keep the fallback
       }
       throw new NijamApiError(message, code, res.status);
     }

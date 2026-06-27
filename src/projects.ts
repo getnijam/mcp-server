@@ -4,7 +4,7 @@ import type { ApiProject } from './types.js';
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 /**
- * Slug of a project name — what an AI naturally types for "Web Checkout"
+ * Slug of a project name, what an AI naturally types for "Web Checkout"
  * (`web-checkout`). Projects have no stored slug; this derivation IS the slug
  * contract, shared by get_projects (output) and the resolver (input).
  */
@@ -23,7 +23,7 @@ export interface ProjectRef {
   name: string;
 }
 
-/** Cache the project list briefly — every tool resolves through it. */
+/** Cache the project list briefly, every tool resolves through it. */
 const CACHE_TTL_MS = 60_000;
 let cache: { at: number; projects: ApiProject[] } | null = null;
 
@@ -35,7 +35,7 @@ export async function listProjects(client: NijamClient): Promise<ApiProject[]> {
 }
 
 /**
- * Resolve a project reference — UUID, slug, or name — to its id.
+ * Resolve a project reference, UUID, slug, or name, to its id.
  * Throws with an actionable message (listing what IS available) on miss or
  * ambiguity, so the model can self-correct without another round trip.
  */
@@ -51,7 +51,7 @@ export async function resolveProjectId(client: NijamClient, ref: string): Promis
   if (matches.length > 1) {
     const candidates = matches.map((p) => `"${p.name}" (${p.id})`).join(', ');
     throw new Error(
-      `Project "${ref}" is ambiguous — ${matches.length} projects share that slug: ${candidates}. Pass the id instead.`,
+      `Project "${ref}" is ambiguous, ${matches.length} projects share that slug: ${candidates}. Pass the id instead.`,
     );
   }
 

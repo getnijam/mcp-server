@@ -1,7 +1,7 @@
 {
   "name": "@nijam/mcp-server",
   "version": "0.1.0-alpha.1",
-  "description": "MCP server for Nijam — query your Playwright runs, failures, and flakiness from any MCP client.",
+  "description": "MCP server for Nijam, query your Playwright runs, failures, and flakiness from any MCP client.",
   "keywords": [
     "mcp",
     "model-context-protocol",
